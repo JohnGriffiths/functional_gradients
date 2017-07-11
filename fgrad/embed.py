@@ -17,6 +17,10 @@ def preprocess_dense_connectome(dc):
         print('Could not load the dense connectome.')
         raise
 
+   
+    # squeeze into a 2D array
+    if len(dcon.shape) == 6: dcon = np.squeeze(dcon)
+
     # First transform the dense connectome back to Pearson correlation
     dcon = np.tanh(dcon)
 
