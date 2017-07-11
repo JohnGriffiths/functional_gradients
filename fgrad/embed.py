@@ -33,7 +33,7 @@ def preprocess_dense_connectome(dc):
         dcon[i, dcon[i,:] < perc[i]] = 0
 
     # See if there are any negative values left
-    neg_values = np.array([sum(dcon[i,:] < 0) for i in range(N)])
+    neg_values = (dcon<0).sum(axis=1)
     print("Negative values occur in %d rows" % sum(neg_values > 0))
 
     # There should be very few of them, so we set them to 0 as well
