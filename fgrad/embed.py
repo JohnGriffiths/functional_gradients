@@ -55,8 +55,9 @@ def embed_dense_connectome(aff):
     from mapalign import embed
 
     # Embedding using mapalign
-    emb, res = embed.compute_diffusion_map(aff, alpha = 0.5, n_components = 300)
-    
+    #emb, res = embed.compute_diffusion_map(aff, alpha = 0.5, n_components = 300)    
+    emb, res = embed.compute_diffusion_map(aff, alpha = 0.5, n_components = 300,return_result=True) # JG_MOD
+
     # Divide each non-trivial eigenvector by the first one and remove the latter
     X = res['vectors']
     X = (X.T/X[:,0]).T[:,1:]
@@ -74,6 +75,7 @@ def save_embedding(X, target = 'rsFC_eigenvectors.dscalar.nii', temp = None):
 
     import subprocess
     import os
+    import numpy as np # JG_ADD
 
     if temp is None:
         temp = os.path.abspath(os.path.curdir)
@@ -84,4 +86,13 @@ def save_embedding(X, target = 'rsFC_eigenvectors.dscalar.nii', temp = None):
     labels = np.array(["Dimension %d" % (i+1) for i in range(X.shape[1])])
     np.savetxt('%s/component_labels.txt' % temp, labels, fmt = "%s")
 
-    subprocess.call(['wb_command','-cifti-create-scalar-series %s/embedded_components.txt %s -name-file %s/component_labels.txt -series SECOND 1 1' % (temp, target, temp)])
+    #subprocess.call(['wb_command','-cifti-create-scalar-series %s/embedded_components.txt %s -name-file %s/component_labels.txt -series SECOND 1 1' % (temp, target, temp)])
+
+    subprocess.call(['wb_command -cifti-create-scalar-series %s/embedded_components.txt %s -name-file %s/component_labels.txt -series SECOND 1 1' % (temp, target, temp)]) # JG_MOD
+
+
+
+
+
+
+
