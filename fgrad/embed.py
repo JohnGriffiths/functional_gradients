@@ -88,8 +88,10 @@ def save_embedding(X, target = 'rsFC_eigenvectors.dscalar.nii', temp = None):
 
     #subprocess.call(['wb_command','-cifti-create-scalar-series %s/embedded_components.txt %s -name-file %s/component_labels.txt -series SECOND 1 1' % (temp, target, temp)])
 
-    subprocess.call(['wb_command -cifti-create-scalar-series %s/embedded_components.txt %s -name-file %s/component_labels.txt -series SECOND 1 1' % (temp, target, temp)]) # JG_MOD
-
+    # JG_MOD
+    cmd = 'wb_command -cifti-create-scalar-series %s/embedded_components.txt %s -name-file %s/component_labels.txt -series SECOND 1 1' % (temp, target, temp)
+    print('%s' %cmd)
+    os.system(cmd)
 
 
 
